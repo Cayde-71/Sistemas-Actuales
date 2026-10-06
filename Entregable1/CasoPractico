@@ -1,0 +1,66 @@
+cayde@cayde-VirtualBox:~/Documentos/SistemasActuales/Proyectos/Entregables$ sudo docker compose build --no-cache && sudo docker compose up -d && sudo docker logs mi_servidor
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+[+] Building 35.7s (18/18) FINISHED                                                                                               docker:default
+ => [servidor internal] load build definition from Dockerfile                                                                               0.1s
+ => => transferring dockerfile: 172B                                                                                                        0.0s
+ => [cliente internal] load build definition from Dockerfile                                                                                0.1s
+ => => transferring dockerfile: 187B                                                                                                        0.0s
+ => [servidor internal] load metadata for docker.io/library/python:3.12-slim                                                                1.8s
+ => [cliente internal] load metadata for docker.io/library/ubuntu:latest                                                                    1.8s
+ => [servidor internal] load .dockerignore                                                                                                  0.0s
+ => => transferring context: 2B                                                                                                             0.0s
+ => [cliente internal] load .dockerignore                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                             0.0s
+ => [servidor 1/3] FROM docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f          0.0s
+ => [servidor internal] load build context                                                                                                  0.0s
+ => => transferring context: 3.53kB                                                                                                         0.0s
+ => CACHED [servidor 2/3] WORKDIR /app                                                                                                      0.0s
+ => [cliente internal] load build context                                                                                                   0.0s
+ => => transferring context: 31B                                                                                                            0.0s
+ => CACHED [cliente 1/3] FROM docker.io/library/ubuntu:latest@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7       0.1s
+ => => resolve docker.io/library/ubuntu:latest@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7                      0.1s
+ => [servidor 3/3] COPY calculatorServer.py calculadora.py ./                                                                               0.2s
+ => [cliente 2/3] COPY script.sh ./                                                                                                         0.2s
+ => [servidor] exporting to image                                                                                                           0.2s
+ => => exporting layers                                                                                                                     0.1s
+ => => writing image sha256:3d9e1791a687c1ed23d6bc7b9f5ee49a5f37f2e49c860be3837fc8c7e737bb57                                                0.0s
+ => => naming to docker.io/library/img-servidor                                                                                             0.0s
+ => [cliente 3/3] RUN apt-get update && apt-get install -y netcat-openbsd                                                                  32.7s
+ => [servidor] resolving provenance for metadata file                                                                                       0.0s
+ => [cliente] exporting to image                                                                                                            0.4s
+ => => exporting layers                                                                                                                     0.3s
+ => => writing image sha256:dd40ceb3f4d5ba63551f3afeada71663525bba829e8c20c915c85128ee37adf4                                                0.0s
+ => => naming to docker.io/library/img_cliente                                                                                              0.0s
+ => [cliente] resolving provenance for metadata file                                                                                        0.1s
+[+] Building 2/2
+ ✔ cliente   Built                                                                                                                          0.0s 
+ ✔ servidor  Built                                                                                                                          0.0s 
+[+] Running 2/2
+ ✔ Container mi_cliente   Started                                                                                                          11.2s 
+ ✔ Container mi_servidor  Started                                                                                                          11.3s 
+cayde@cayde-VirtualBox:~/Documentos/SistemasActuales/Proyectos/Entregables$ sudo docker logs mi_servidor
+2026-10-06 11:29:15.042764 [Info] Iniciando calculadora
+cayde@cayde-VirtualBox:~/Documentos/SistemasActuales/Proyectos/Entregables$ sudo docker exec -it mi_cliente /bin/bash
+root@2a2d235c078a:/# sh 
+.dockerenv  bin/        dev/        home/       lib64/      mnt/        proc/       run/        script.sh   sys/        usr/        
+.rock/      boot/       etc/        lib/        media/      opt/        root/       sbin/       srv/        tmp/        var/        
+root@2a2d235c078a:/# sh script.sh 
+31
+15
+56
+5.0
+8
+6.0
+root@2a2d235c078a:/# exit
+exit
+cayde@cayde-VirtualBox:~/Documentos/SistemasActuales/Proyectos/Entregables$ sudo docker logs mi_servidor
+2026-10-06 11:29:15.042764 [Info] Iniciando calculadora
+2026-10-06 11:29:34.527740 [Info] Conexiones activas: 1
+2026-10-06 11:29:34.529910 [Info] Operacion Completada. + 9 22 --> 31
+2026-10-06 11:29:34.530055 [Info] Operacion Completada. - 30 15 --> 15
+2026-10-06 11:29:34.530152 [Info] Operacion Completada. * 7 8 --> 56
+2026-10-06 11:29:34.531456 [Info] Operacion Completada. / 10 2 --> 5.0
+2026-10-06 11:29:34.531581 [Info] Operacion Completada. ^ 2 3 --> 8
+2026-10-06 11:29:34.533117 [Info] Operacion Completada. m 7 5 --> 6.0
+2026-10-06 11:29:34.533534 [Info] Conexiones activas: 0

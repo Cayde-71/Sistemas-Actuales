@@ -1,0 +1,20 @@
+Entrega 1: Calculadora accesible por sockets
+
+Como base para este ejercicio he priorizado hacer solo las tres operaciones basicas: sumar, restar y multiplicar, hasta que las imagenes de cada maquina estuvieran correctamente configuradas y preparadas para conectarse entre si mediante netcat.
+Algunos problemas que han aparecido durante el desarrollo de esta practica a sido servidores cerrandose automaticamente luego de iniciarse y no conocer como funcinona el paso por mensajes de netcat a traves de bash.
+Luego de largo rato haciendo debug de los dockerfile, para el sistema de logs me di cuenta que con hacer "docker logs mi_servidor" y salian los prints que colocaba. Aproveche esto para agregar más y clasificados en [Info] o [Error] dependiendo 
+si impedian la ejecución o solo informaban. Luego de mirar el output del propio Visual Studio recorde que los logs deben tener hora a si que agregue datetime.now() a cada print para utilizar el tiempo de la maquina para consultar el orden de los logs.
+
+Ya por último, se agregaron el resto de operaciones salvo por sqrt(square root) ya que se me hizo más comodo colocar directamente las potencias. Tal y como se pide para la practica, se lleva la cuenta de las conexiones activas, esta implementación fue
+obtenida usando copilot para saber como ponerlo en marcha pero la implementación parece correcta y funcional ya que incluso utiliza un sistema de locks pensando en la concurrencia de varios clientes consultando al mismo tiempo el servidor.
+
+Para poder acceder a los logs: sudo docker logs mi_servidor
+
+Operaciones:
+
+sumar: + a b
+restar: - a b
+multiplicar: * a b
+dividir: / a b
+Potencia: ^ a b
+Media: m a b
