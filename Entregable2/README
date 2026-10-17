@@ -1,0 +1,60 @@
+Entrega 2: Calculadora accesible mediante Rest
+
+Para esta segunda practica, se ha preparado un sistema por el cual primero hay que establecer un ID mediante post "/api/v1/conexiones" el cual devolvera dicho ID para poder acceder a las distintas funciones de la calculadora.
+La entrada y salida de las solicitudes usan formato JSON. Luego de tener el id podremos operar, comprobar el resultado de la ultima operación realizada o reiniciar dicho resultado a 0. Para usar el resultado en operaciones es necesario utilizar el caracter R en el primer parametro.
+Para poder usar todas las funciones se usa esta estructura:
+
+"http://servidor:5050/api/v1/conexiones/<id>/<funcion>"
+
+<funcion>: operar, resultado, reset
+
+La variable que se ocupa de guardar reside en una instancia de la clase calculadora dentro del servidor(el cliente no guarda nada).
+
+A continuación se muestran algunos ejemplos:
+
+root@c467b74c285b:/# curl -i -X POST http://servidor:5050/api/v1/conexiones
+HTTP/1.1 201 CREATED
+Server: Werkzeug/3.1.9 Python/3.12.15
+Date: Sat, 17 Oct 2026 20:47:18 GMT
+Content-Type: application/json
+Content-Length: 66
+Connection: close
+
+{"conexion_id":"373250f8-c6e3-4c08-af54-461ca744d37c","result":0}
+root@c467b74c285b:/# curl -i -X POST   http://servidor:5050/api/v1/conexiones/373250f8-c6e3-4c08-af54-461ca744d37c/operar   -H 'Content-Type: application/json'   -d '{"mensaje": "+ 2 2"}'
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.12.15
+Date: Sat, 17 Oct 2026 20:48:04 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: close
+
+{"result":"4"}
+root@c467b74c285b:/# curl -i -X POST   http://servidor:5050/api/v1/conexiones/373250f8-c6e3-4c08-af54-461ca744d37c/operar   -H 'Content-Type: application/json'   -d '{"mensaje": "+ R 2"}'
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.12.15
+Date: Sat, 17 Oct 2026 20:48:11 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: close
+
+{"result":"6"}
+root@c467b74c285b:/# curl -i -X GET http://servidor:5050/api/v1/conexiones/373250f8-c6e3-4c08-af54-461ca744d37c/resultado
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.12.15
+Date: Sat, 17 Oct 2026 20:48:45 GMT
+Content-Type: application/json
+Content-Length: 13
+Connection: close
+
+{"result":6}
+root@c467b74c285b:/# curl -i -X POST http://servidor:5050/api/v1/conexiones/373250f8-c6e3-4c08-af54-461ca744d37c/reset
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.12.15
+Date: Sat, 17 Oct 2026 20:49:18 GMT
+Content-Type: application/json
+Content-Length: 46
+Connection: close
+
+{"message":"Resultado reiniciado","result":0}
+

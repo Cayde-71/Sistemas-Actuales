@@ -1,16 +1,16 @@
 services:
   servidor:
     image: img-servidor
-    build: ./Entregable1/Calculadora
+    build: ./Calculadora
     container_name: mi_servidor
     ports:
-      - "5088"
+      - "5050:5050"
     networks:
       - net-service
 
   cliente:
     image: img_cliente
-    build: ./Entregable1/Cliente
+    build: ./Cliente
     container_name: mi_cliente
     networks:
       - net-service

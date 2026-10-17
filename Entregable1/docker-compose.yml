@@ -1,0 +1,20 @@
+services:
+  servidor:
+    image: img-servidor
+    build: ./Calculadora
+    container_name: mi_servidor
+    ports:
+      - "5088"
+    networks:
+      - net-service
+
+  cliente:
+    image: img_cliente
+    build: ./Cliente
+    container_name: mi_cliente
+    networks:
+      - net-service
+
+networks:
+  net-service:
+    driver: bridge
